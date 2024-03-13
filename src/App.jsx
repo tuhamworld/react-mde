@@ -6,18 +6,22 @@ import Split from "react-split";
 import { nanoid } from "nanoid";
 
 export default function App() {
-  const [notes, setNotes] = React.useState([]);
+  
+  const storedItem = JSON.parse(localStorage.getItem("notes"))
+
+  const [notes, setNotes] = React.useState( ()=>
+    storedItem || []);
   const [currentNoteId, setCurrentNoteId] = React.useState(
     (notes[0] && notes[0].id) || ""
   );
 
   // Loading Item from localStorage
-  useEffect(() => {
-    const storedItem = JSON.parse(localStorage.getItem("notes"));
-    if (storedItem) {
-      setNotes(storedItem);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedItem = JSON.parse(localStorage.getItem("notes"));
+  //   if (storedItem) {
+  //     setNotes(storedItem);
+  //   }
+  // }, []);
 
   // Setting Item to localStorage
   useEffect(() => {
