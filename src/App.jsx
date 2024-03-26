@@ -6,22 +6,13 @@ import Split from "react-split";
 import { nanoid } from "nanoid";
 
 export default function App() {
-  
-  const storedItem = JSON.parse(localStorage.getItem("notes"))
+  // Loading item from localStorage variable
+  const storedItem = JSON.parse(localStorage.getItem("notes"));
 
-  const [notes, setNotes] = React.useState( ()=>
-    storedItem || []);
+  const [notes, setNotes] = React.useState(() => storedItem || []);
   const [currentNoteId, setCurrentNoteId] = React.useState(
     (notes[0] && notes[0].id) || ""
   );
-
-  // Loading Item from localStorage
-  // useEffect(() => {
-  //   const storedItem = JSON.parse(localStorage.getItem("notes"));
-  //   if (storedItem) {
-  //     setNotes(storedItem);
-  //   }
-  // }, []);
 
   // Setting Item to localStorage
   useEffect(() => {
@@ -38,13 +29,19 @@ export default function App() {
   }
 
   function updateNote(text) {
-    setNotes((oldNotes) =>
-      oldNotes.map((oldNote) => {
-        return oldNote.id === currentNoteId
-          ? { ...oldNote, body: text }
-          : oldNote;
-      })
-    );
+    // Re-arranging notes based on editing
+    setNotes((oldNotes) => {
+      const newArray = [];
+      for (let i = 0; i < oldNotes.length; i++) {
+        const oldNote = oldNotes[i];
+        if (oldNote.id === currentNoteId) {
+          newArray.unshift({ ...oldNote, body: text });
+        } else {
+          newArray.push(oldNote);
+        }
+      }
+      return newArray;
+    });
   }
 
   function findCurrentNote() {
