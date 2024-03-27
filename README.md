@@ -10,3 +10,4 @@ As a software engineer, you are most likely to be working on an existing codebas
 - Sync notes with localStorage
 - Add note summary titles
 - Moving recently modified notes to the top
+- Deleting Notes
